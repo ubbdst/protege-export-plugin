@@ -34,7 +34,7 @@
             <pathelement location = "${protege.lib}"/>
             <pathelement location = "${protege.home}/driver.jar"/>
             <fileset dir="${owl.plugin.path}"/>
-            <!--pathelement location = "convertToDb.jar"/-->
+            <pathelement location = "dist/protege-export-plugin.jar"/>
         </path>
     </target>
 

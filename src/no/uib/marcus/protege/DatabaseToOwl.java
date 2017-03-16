@@ -19,7 +19,7 @@ import java.util.logging.Level;
  * University of Bergen Library
  * 2017-03-16
  *
- * Code to export a protege 3 database backend programatically.
+ * Code to export a protege 3 database backend programmatically.
  * References:
  * http://protegewiki.stanford.edu/wiki/LoadOWLOntologyFromDB (method 2)
  * http://smi-protege.stanford.edu/svn/owl/trunk/src/edu/stanford/smi/protegex/owl/jena/export/JenaExportPlugin.java?view=markup
@@ -39,7 +39,8 @@ public class DatabaseToOwl {
     private static String outputFileUrl = "";
 
     public static void main(String[] args) throws Exception {
-
+        
+        Log.getLogger().info("Given parameters: " + Arrays.toString(args));
         if (args.length < 6) {
             Log.getLogger().info("These parameters must exist: " +
                     "outputFilePath dbDriver dbUrl dbTable dbUser dbPassword");
@@ -59,7 +60,7 @@ public class DatabaseToOwl {
             outputFileUrl = outputFilePath +
                     "/" +
                     table +
-                    DateUtil.getCurrentDate("yyyy-mm-dd-HHmmss") +
+                    DateUtil.getCurrentDate("yyyyMMddHHmmss") +
                     OWL_EXT;
         }
         SystemUtilities.logSystemInfo();
