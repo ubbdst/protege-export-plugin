@@ -1,5 +1,6 @@
-#Protege Export Plugin
-This is a Protege 3.X plugin that exports Protege Database backend to OWL file.
+# Protege Export Plugin
+This is a plugin for Protege 3.X that exports Protege database backend to OWL file.
 
-##Installation
+
+## Installation
 More documentation to follow
