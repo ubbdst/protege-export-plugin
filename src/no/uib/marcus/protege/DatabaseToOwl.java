@@ -6,11 +6,13 @@ import edu.stanford.smi.protege.util.SystemUtilities;
 import edu.stanford.smi.protegex.owl.database.creator.OwlDatabaseCreator;
 import edu.stanford.smi.protegex.owl.model.OWLModel;
 import edu.stanford.smi.protegex.owl.writer.rdfxml.rdfwriter.OWLModelAllTripleStoresWriter;
+import java.io.File;
 import no.uib.marcus.protege.util.DateUtil;
 
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.logging.Level;
 
 
@@ -29,9 +31,9 @@ public class DatabaseToOwl {
     //Sample parameter values for debugging purpose
     private static String driver = "com.mysql.jdbc.Driver";
     private static String dbUrl = "jdbc:mysql://localhost:3306/protege";
-    private static String dbTable = "protegeTable, ska";
+    private static String dbTable = "ska";
     private static String username = "hemed";
-    private static String password = "hemed";
+    private static String password = "";
     private static String owlFileUrl = "file:/E:/Protege-3.5/db2owl/marcus_export_todaysdate.owl";
     private static String outputFilePath = "file:/E:/Protege-3.5/db2owl";
     private static final String OWL_EXT = ".owl";
@@ -56,7 +58,6 @@ public class DatabaseToOwl {
         username = args[4];
         password = args[5];
 
-
         //Seperate string of tables
         if (dbTable.indexOf(',') != -1) {
             databaseTables = dbTable.split(Character.toString(','));
@@ -64,17 +65,16 @@ public class DatabaseToOwl {
             databaseTables[0] = dbTable;
         }
 
-
-        Log.getLogger().log(Level.INFO, "\n===== Starting the export from Protege database on {0}", DateUtil.getCurrentDate());
-        Log.getLogger().log(Level.INFO, "=== Database URL: {0}", dbUrl);
-        Log.getLogger().log(Level.INFO, "=== OWL File Path: {0}", outputFilePath);
+        Log.getLogger().log(Level.INFO, "\n===== Starting the export from Protege database on " + DateUtil.getCurrentDate());
+        Log.getLogger().log(Level.INFO, "=== Database URL: " + dbUrl);
+        Log.getLogger().log(Level.INFO, "=== OWL File Path: " + outputFilePath);
 
         //Export OWL file for each database table
         for (String table : databaseTables) {
             String tableName = table.trim();
             outputFileUrl = createOwlFileUrl(outputFilePath, tableName);
             SystemUtilities.logSystemInfo();
-            Log.getLogger().log(Level.INFO, "=== Exporting for database table: {0}\n", table);
+            Log.getLogger().log(Level.INFO, "=== Exporting for database table: " + table);
             URI fileURI = new URI(((outputFileUrl)));
             Collection<String> errors = new ArrayList<String>();
 
@@ -115,11 +115,11 @@ public class DatabaseToOwl {
         String newPath = path;
         //TODO: Validation
         if(!path.startsWith("file:")){
-            throw new IllegalArgumentException("File path must start with 'file://' to be a valid URI scheme")
+            throw new IllegalArgumentException("File path must start with 'file://' to be a valid URI scheme but found [ " + path + "]");
         }
         //Add seperator at the end, if it does not exist.
-        if(!path.endsWith(File.seperator)){
-            newPath = path + File.seperator();
+        if(!path.endsWith(File.separator)){
+            newPath = path + File.separator;
         }
         return newPath + tableName + DateUtil.getCurrentDate("yyyyMMddHHmmss") + OWL_EXT;
     }
